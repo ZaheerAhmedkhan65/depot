@@ -5,46 +5,48 @@
     </p>
   <% end %>
 
-  <div class="d-flex justify-content-center  align-items-center pb-4">
+  <div class="d-flex justify-content-center align-items-center pb-4">
     <h1 class="text-center display-4">Products</h1>
   </div>
 
-  <table id="products" class="table table-striped mx-auto">
-    <tfoot>
-      <tr>
-        <td colspan="3">
-          <%= link_to 'New product', new_product_path, class: "btn btn-success mt-3" %>
-        </td>
-      </tr>
-    </tfoot>
-
-    <tbody>
-      <% @products.each do |product| %>
-        <tr>
-          <td class="px-2 py-3">
-            <%= image_tag(product.image_url, class: 'img-fluid w-25') %> <!-- Adjusted width -->
-          </td>
-          <td>
-            <h1 class="h5 font-weight-bold mb-3"><%= product.title %></h1>
-            <p>
-              <%= truncate(strip_tags(product.description), length: 80) %>
-            </p>
-          </td>
-          <td class="px-3">
-            <ul class="list-unstyled">
-              <li>
-                <%= link_to 'Show', product, class: 'text-decoration-underline' %>
-              </li>
-              <li>
-                <%= link_to 'Edit', edit_product_path(product), class: 'text-decoration-underline' %>
-              </li>
-              <li>
-                <%= link_to 'Destroy', product, class: 'text-decoration-underline', data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
-              </li>
-            </ul>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <div id="products" class="mx-auto">
+    <% @products.each do |product| %>
+      <!-- Wrap each product inside a row -->
+      <div class="row">
+        <div class="col-12">
+          <div class="d-flex align-items-center justify-content-between border border-1">
+            <div class="px-2 py-3 w-25">
+              <%= image_tag(product.image_url, class: 'img-fluid w-100 h-100') %>
+            </div>
+            <div class="w-100 px-2 py-3">
+              <h1 class="h5 font-weight-bold mb-3"><%= product.title %></h1>
+              <p>
+                <%= truncate(strip_tags(product.description), length: 80) %>
+              </p>
+            </div>
+            <div class="px-4 py-3 w-25 text-end">
+              <div>
+                <%= link_to product, class: 'fs-2 text-info' do %>
+                  <i class="fa-solid fa-eye"></i>
+                <% end %>
+              </div>
+              <div>
+                <%= link_to edit_product_path(product), class: 'fs-2 text-warning' do %>
+                  <i class="fa-solid fa-pen"></i>
+                <% end %>
+              </div>
+              <div>
+                <%= link_to product, class: 'fs-2 text-danger', data: { turbo_method: :delete, turbo_confirm: "Are you sure to delete?" } do %>
+                  <i class="fa-solid fa-trash"></i>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <div>
+      <%= link_to 'New product', new_product_path, class: "btn btn-success mt-3" %>
+    </div>
+  </div>
 </div>
